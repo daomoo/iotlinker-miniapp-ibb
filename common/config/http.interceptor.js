@@ -74,7 +74,6 @@ const install = (Vue, vm) => {
 	Vue.prototype.$u.http.interceptor.request = (config) => {
 
 		if (!(config.url === apiUrl.userLogin ||
-				config.url.startsWith('/sendCode/') ||
 				config.url == '/common/upload')) {
 			if (checkAccessToken) {
 
@@ -83,7 +82,7 @@ const install = (Vue, vm) => {
 
 		}
 
-		// console.log(config)
+		console.log(config)
 
 		// 引用token
 		// 方式一，存放在vuex的token，假设使用了uView封装的vuex方式
@@ -120,6 +119,8 @@ const install = (Vue, vm) => {
 	Vue.prototype.$u.http.interceptor.response = async (res) => {
 
 		const statusCode = res.data.code
+		
+		console.log(res)
 		
 		if (statusCode === 401 && checkAccessToken) {
 			

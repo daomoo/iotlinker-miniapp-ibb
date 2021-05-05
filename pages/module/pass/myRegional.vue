@@ -15,9 +15,9 @@
 			<view class="u-m-24 u-p-t-24" style="height: 80vh;background-color: #FFFFFF; border-radius: 20rpx;">
 				<!-- 用户通行区域 -->
 				<scroll-view  scroll-y="true" style="height: 80vh;">
-					<view class="u-p-24" v-for="i in selectProjectList ">
+					<view class="u-p-24" v-for="i in arrangeList ">
 						
-						<u-button> {{i.label}}</u-button>
+						<u-button> {{i.arrangeName}}</u-button>
 						
 						<!-- <view class="u-p-24 u-flex u-text-center" style="width: 50%;display: inline-flex;" v-for="b in i.value ">
 							<text>{{b.arrangeName}}</text>
@@ -41,14 +41,7 @@
 		data() {
 			return {
 				
-				//设备信息
-				device:{
-					windowTotalH: '',
-					screenBrightness: '',
-				},
-				
-				selectOrgName:'',
-				selectProjectList: [],
+				arrangeList: [],
 				
 				
 			}
@@ -71,17 +64,15 @@
 				// let path = pages[pages.length - 1].route;
 				// this.$u.api.checklogin(path)
 				
-				
 				let _self = this
 				
 				//获取用户通行区域
-				this.$u.api.getPassRegion({
-					accountId:this.g_userProfile.accountId,
-					projectName:this.g_userProfile.project.projectName
+				this.$u.api.getArrange({
+					projectId:this.g_userProfile.project.projectId
 				},).then(res=>{
 					
-					console.log (res)
-					_self.selectProjectList = res
+					// console.log (res)
+					_self.arrangeList = res
 					
 				}).catch(err =>{
 					

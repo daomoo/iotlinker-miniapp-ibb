@@ -12,13 +12,13 @@
 
 					<!-- icon="camera" -->
 
-					<u-avatar mode="square" size="128" :src="g_userProfile.avatarUrl"></u-avatar>
+					<u-avatar mode="square" size="128" :src="g_userProfile.avatar"></u-avatar>
 
 				</u-cell-item>
 
 				<!-- 个人账户信息 -->
 				<u-cell-item title="姓名" :border-bottom="isbottom" :value="g_userProfile.loginName"></u-cell-item>
-				<u-cell-item title="账号" :border-bottom="isbottom" :value="g_userProfile.accountCode"></u-cell-item>
+				<u-cell-item title="账号" :border-bottom="isbottom" :value="g_userProfile.loginId"></u-cell-item>
 
 				<!-- 默认账号绑定手机 -->
 				<u-cell-item title="手机" :border-bottom="isbottom" :value="g_userProfile.mobilephone"></u-cell-item>
@@ -34,7 +34,8 @@
 		<view class="u-m-t-20 u-p-12" style=" background-color: #FFFFFF; border-radius: 20rpx;">
 			<u-cell-group :border="false">
 				<!-- 选择楼宇项目 -->
-				<u-cell-item title="我的楼宇" :border-bottom="isbottom" :value="g_userProfile.project.projectName" @click="navTO_chgProject"></u-cell-item>
+				<u-cell-item title="我的楼宇" :border-bottom="isbottom" :value="g_userProfile.project.projectName" 
+					@click="$u.route('/pages/user/userSetting/chgProject',{selectTag: 'project' })"></u-cell-item>
 			</u-cell-group>
 
 		</view>
@@ -127,30 +128,22 @@
 							// #endif
 							
 							// #ifdef H5 
-							file: this.g_userProfile.avatarUrl,
+							file: this.g_userProfile.avatar,
 							// #endif
 						})
 					}
 					
-					//获取登陆账户信息
-					let userProfile = await this.$u.api.login({
-
-						mobilephone: this.g_userProfile.mobilephone,
-						AESpassword: this.g_userProfile.pwd,
-
-					})
-
-					//获取登陆账号项目信息
-					userProfile.project = await this.$u.api.project({
-
-						accountId: this.g_userProfile.accountId,
-						projectId: this.g_userProfile.project.projectId,
-						projectName: this.g_userProfile.project.projectName,
-						orgId: this.g_userProfile.project.orgId,
-						orgName: this.g_userProfile.project.orgName,
-					})
-
-					await this.$u.vuex('g_userProfile', userProfile)
+					let userInfo = await this.$u.api.getUserInfo()
+					
+					let projectList = await this.$u.api.getProjectList()
+					
+					userInfo.projectList = projectList
+				
+					userInfo.project = this.g_userProfile.project
+					
+					// userInfo.project.org = projectList[0].organizationList[0]
+					
+					await this.$u.vuex('g_userProfile', userInfo)
 					console.debug(this.g_userProfile)
 
 				} catch (err) {
@@ -177,16 +170,15 @@
 				})
 			},
 
-
 			submit() {
 
 				this.show = true;
 			},
 
-
 			async logout() {
-
+				uni.removeStorageSync('accessToken')
 				uni.removeStorageSync('userProfile')
+				await this.$u.vuex("g_accessToken", '')
 				await this.$u.vuex("g_userProfile", '')
 
 				//路由到登陆页
@@ -197,14 +189,6 @@
 
 			},
 
-
-			navTO_chgProject() {
-
-				uni.navigateTo({
-					url: '/pages/user/userSetting/chgProject'
-				});
-
-			},
 		}
 	}
 </script>

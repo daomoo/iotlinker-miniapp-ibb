@@ -6,7 +6,7 @@
 				<!-- <u-avatar :src="g_avatarUrl" size="large" @click="chooseAvatar"></u-avatar> -->
 				<!-- <button open-type="getUserInfo" @getuserinfo="onGetUserInfo" class="userinfo-avatar" :style="'background-image:url(' + g_userProfile.avatarUrl + ')'"
 					 size="default"></button> -->
-				<u-avatar  :src="g_userProfile.avatarUrl" size="large">
+				<u-avatar  :src="g_userProfile.avatar" size="large">
 				</u-avatar>
 
 			</view>

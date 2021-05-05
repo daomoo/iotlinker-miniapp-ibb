@@ -198,6 +198,24 @@ var install = (Vue, vm) => {
 			})
 			
 	}
+	
+	/**
+	 * 获取组织信息
+	 * @param projectId 用户项目Id
+	 * @returns {*}
+	 */
+	async function getOrgListbyProject(params = {}) {
+	
+		params.projectId = params.projectId || ''
+		
+		return await vm.$u.get(apiUrl.projectOrganization, {
+			id: params.projectId,
+		})
+	
+	}
+	
+	
+	
 	/**
 	 * 账户登陆接口
 	 * @param phone 			登陆手机号
@@ -267,24 +285,89 @@ var install = (Vue, vm) => {
 		
 	}
 	
+	
+	/**
+	 * 获取项目信息
+	 * @returns {project} 	项目信息
+	 */
+	async function getProjectById(params = {}) {
+		
+		return await vm.$u.get(apiUrl.projectById,{
+			
+			id: params.projectId,
+		
+		})
+
+		
+	}
+	
+	
+	
+	
+	
 	/**
 	 * 获取组织信息
 	 * @param accountId 用户accountId
-	 * @param projectId 用户项目
 	 * @returns {*}
 	 */
 	async function getOrgList(params = {}) {
 		
-		// params.orgId = params.orgId
 		
 	
-		return await vm.$u.get(apiUrl.organization, 
+		return await vm.$u.get(apiUrl.organizationbyId, 
 		{
 			id: params.orgId,
 			
 		})
 	
 	}
+	
+	
+	/**
+	 * 获取组织信息
+	 * @param orgId 组织Id
+	 * @returns {*}
+	 */
+	async function getOrgById(params = {}) {
+		
+		return await vm.$u.get(apiUrl.organizationById, 
+		{
+			id: params.orgId,
+			
+		})
+	
+	}
+	
+	/**
+	 * 获取通行日志
+	 * @param month    月份
+	 * @returns {*}
+	 */
+	async function getTransitLog(params = {}) {
+		
+		return await vm.$u.get(apiUrl.transitLog, 
+		{
+			month: params.month,
+			
+		})
+	
+	}
+	
+	/**
+	 * 获取通行区域
+	 * @param id  projectId 项目Id
+	 * @returns {*}
+	 */
+	async function getArrange(params = {}) {
+		
+		return await vm.$u.get(apiUrl.arrangeByProject, 
+		{
+			id: params.projectId,
+			
+		})
+	
+	}
+	
 	
 	
 	/**
@@ -683,11 +766,16 @@ var install = (Vue, vm) => {
 		getUserInfo,
 		qrcodeImage,
 		getProjectList,
+		getProjectById,
+		getTransitLog,
+		getArrange,
 		getPassQrcode,
+		getOrgListbyProject,
 		uploadUserAvatar,
 		loginSmsCode,
 		project,
 		getOrgList,
+		getOrgById,
 		getRoomList,
 		getNewsList,
 		checklogin,

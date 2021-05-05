@@ -19,7 +19,7 @@ export default {
 	userLoginBySmsCode: baseUrl + '/sys/token/sms',
 	
 	//用户配置信息
-	userInfo: baseUrl + '/account/profile',
+	userInfo: baseUrl + '/account',
 	
 	//上传头像
 	userUploadAvater: baseUrl + '/account/avatar',
@@ -30,17 +30,28 @@ export default {
 	//获取雇员项目信息
 	projectList: baseUrl + '/project/list',
 	
-	//获取雇员组织信息
-	projectListByAccountId: baseUrl + '/org',
+	//获取项目信息
+	projectById: baseUrl + '/project',
+	
+	//获取项目组织信息
+	projectOrganization: baseUrl + '/project/org',
 	
 	//获取组织信息
-	organization: baseUrl +  '/org',
+	organizationById: baseUrl +  '/org',
+	
+	//获取二维码
+	qrcode: baseUrl + '/transit/qrcode',
+	
+	//获取通行日志
+	transitLog: baseUrl + '/transit/log/list',
+	
+	//获取通行区域
+	arrangeByProject: baseUrl + '/transit/arrange/project',
 	
 	//获取房间室号
 	resourceByOrgId: baseUrl + 'project/resource/ByOrgId',
 	
-	//获取二维码
-	qrcode: baseUrl + '/transit/qrcode',
+	
 	
 	//获取新闻资讯
 	news: baseUrl + 'news',

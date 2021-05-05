@@ -44,23 +44,25 @@
 			this.project = e
 			let _self = this
 			
-			this.$u.api.getOrgList().then(res=>{
+			this.$u.api.getOrgListbyProject({
+				projectId: this.project.id
+				
+			}).then(res=>{
 				console.log(res)
+				_self.orgList = res
+				// if (_self.project.id != '') {
 				
-				if (_self.project.projectId != '') {
+				// 	for (let i in res) {
 				
-					for (let i in res) {
+				// 		if (res[i].projectId === _self.project.projectId) {
 				
-						if (res[i].projectId === _self.project.projectId) {
+				// 			_self.orgList = res[i].orgList
+				// 		}
+				// 	}
+				// }
+			}).catch(err => {
 				
-							_self.orgList = res[i].orgList
-				
-						}
-					}
-				}
-			}).catch(err=>{
-				
-				_self.$u.toast(err.message)
+				_self.$u.toast(err.msg)
 				
 			})
 			
@@ -71,7 +73,7 @@
 
 				return function(val) {
 
-					if (val === this.g_userProfile.project.orgId) {
+					if (val === this.g_userProfile.project.org.orgId) {
 						return true;
 					} else {
 						return false;
@@ -85,19 +87,20 @@
 
 
 			async loadSelectedProject(e) {
-
+				
+				try{
 				let userProfile = {}
 				console.log(e)
 				//用户默认项目信息
-				this.project = await this.$u.api.project({
-					accountId: this.g_userProfile.accountId,
-					projectId: this.project.projectId,
-					projectName: this.project.projectName,
-					orgId: e.orgId,
-					orgName: e.orgName,
-				})
+				// this.project = await this.$u.api.project({
+				// 	accountId: this.g_userProfile.accountId,
+				// 	projectId: this.project.projectId,
+				// 	projectName: this.project.projectName,
+				// 	orgId: e.orgId,
+				// 	orgName: e.orgName,
+				// })
 				
-				console.log(this.project)
+				// console.log(this.project)
 				/* 获取登陆用户选定项目信息
 				 * @param accountId 	用户账号Id
 				 * @param projectId 	项目对象
@@ -106,15 +109,31 @@
 				 * @param orgName		组织名字
 				 * @returns {*}
 				 */
-
-
+				this.project.project = await this.$u.api.getProjectById({
+					projectId: this.project.id
+				})
+				
+				this.project.project.org = await this.$u.api.getOrgById({
+					orgId: e.orgId
+				})
+				
+				
 				userProfile = this.g_userProfile
 
-				userProfile.project = this.project
-
+				userProfile.project = this.project.project
+				
+				
 				//保存全局用户配置信息
 				await this.$u.vuex('g_userProfile', userProfile);
-				console.debug(this.g_userProfile.project)
+				
+				
+				console.debug(this.g_userProfile)
+				
+				
+				}catch(err){
+					console.log(err)
+					this.$u.toast(err.msg)
+				}
 
 			}
 

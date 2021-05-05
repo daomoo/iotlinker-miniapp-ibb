@@ -5,7 +5,7 @@
 		<u-navbar :is-back="false" :title="$t('lang.title')" title-color="#FFFFFF"
 			:background="{ background: 'mainColor' }" :border-bottom="false">
 			<view class="slot-wrap u-type-info-light">
-				<u-avatar :src="g_userProfile.avatarUrl" size="64" @click="$u.route('/pages/user/index')">
+				<u-avatar :src="g_userProfile.avatar" size="64" @click="$u.route('/pages/user/index')">
 				</u-avatar>
 				<view class="u-flex-col u-p-l-8 ">
 					<view class="u-font-12">{{g_userProfile.loginName}}</view>

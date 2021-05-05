@@ -11,6 +11,7 @@ let storageSaveData={
 		faceIDUrl:{name:'faceIDUrl',data:{}} ,
 		wxUserInfo:{name:'wxUserInfo',data:{}},
 		userProfile:{name:'userProfile',data:{}},
+		userInfo:{name:'userInfo',data:{}},
 		accessToken:{name:'accessToken',data:{}},
 	
 	}
@@ -64,6 +65,8 @@ const store = new Vuex.Store({
 		//用户配置信息(包含用户账户，用户密码，用户选定的项目，项目列表，用户组织列表)
 		g_userProfile: storageSaveData.userProfile.data ? storageSaveData.userProfile.data:{},
 		
+		//用户信息
+		g_userInfo: storageSaveData.userInfo.data ? storageSaveData.userInfo.data:{},
 	
 		//用户选定项目信息
 		// g_project: storageSaveData.project.data ? storageSaveData.project.data:{},

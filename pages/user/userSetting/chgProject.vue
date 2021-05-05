@@ -4,20 +4,22 @@
 		<u-cell-group :border="false">
 
 			<!-- 个人用户信息 -->
-			<u-cell-item v-for="i in g_userProfile.projectList" :key="i.projectID" :arrow="arrow" :title="i.projectName" @click="loadSelectedProject({
-						projectId:i.projectID,
+			<u-cell-item v-for="i in g_userProfile.projectList" :key="i.projectId" :arrow="arrow" :title="i.projectName"
+				
+				@click="loadSelectedProject({
+						projectId:i.projectId,
 						projectName:i.projectName
 						
 					})">
 
 				<!-- 用户选定项目 -->
-				<!-- <view v-if="checkShow(i.projectID)"> -->
+				<view v-if="checkShow(i.projectId)">
 
-				<!-- <u-icon  size="32" :name="iconName"></u-icon> -->
+					<u-icon size="32" :name="iconName"></u-icon>
 
-				<!-- <u-icon slot="icon" size="32" :name="iconName" ></u-icon> -->
+					<u-icon slot="icon" size="32" :name="iconName"></u-icon>
 
-				<!-- </view> -->
+				</view>
 
 			</u-cell-item>
 
@@ -41,7 +43,6 @@
 		},
 		onLoad() {
 
-
 			this.project = this.g_userProfile.project
 
 		},
@@ -50,7 +51,7 @@
 
 				return function(val) {
 
-					if (val === this.project.projectID) {
+					if (val === this.project.projectId) {
 						return true;
 					} else {
 						return false;
@@ -65,8 +66,8 @@
 
 				//用户默认项目信息
 				this.project = {
-					projectId: e.projectId,
-					projectName: e.projectName,
+					id: e.projectId,
+					name: e.projectName,
 					// projectAddress: project.projectAddress,
 					// orgId: orgList[0].orgId,
 					// orgName: orgList[0].orgName,
@@ -74,7 +75,7 @@
 					// roomName: roomList[0].resourceName,
 				}
 				// console.log(this.$u.queryParams(this.project))
-
+				
 				uni.navigateTo({
 					url: '/pages/user/userSetting/chgProjectOrg' + this.$u.queryParams(this.project)
 				});

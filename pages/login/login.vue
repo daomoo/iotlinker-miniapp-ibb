@@ -93,15 +93,16 @@
 
 					await this.$u.vuex('g_accessToken', accessToken)
 
-					let UserInfo = await this.$u.api.getUserInfo()
+					let userInfo = await this.$u.api.getUserInfo()
 
 					let projectList = await this.$u.api.getProjectList()
 
-					UserInfo.project = projectList[0]
+					userInfo.project = projectList[0]
 
-					UserInfo.project.org = projectList[0].organizationList[0]
+					userInfo.project.org = projectList[0].organizationList[0]
+					
 
-					await this.$u.vuex('g_userProfile', UserInfo)
+					await this.$u.vuex('g_userProfile', userInfo)
 
 					console.debug(this.g_userProfile)
 

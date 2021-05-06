@@ -69,12 +69,14 @@ const toBase64 = (url,rallback) =>{
 //获取qrmenu菜单
 const getQrMenus = (qrmenuId,serviceMenus) =>{
 	
+	console.log(qrmenuId)
+	
 	let qrMenus= []
 	qrmenuId.forEach(function(item){
 		
-		if (serviceMenus.has(item.code)) {
+		if (serviceMenus.has(item)) {
 			
-			qrMenus.push(serviceMenus.get(item.code));
+			qrMenus.push(serviceMenus.get(item));
 			
 		}
 			
@@ -111,19 +113,6 @@ var install = (Vue, vm) => {
 			let accessToken = {}
 			accessToken.code = crypTo.AES_encrypt(params.password)
 			accessToken.token = res.accessToken
-			//用户项目列表
-			//project 设为 string
-			// let tmp = JSON.stringify(res.project).replace(/\\\"projectID\\\":(\d+)/g, '\\"projectID\\":\\"$1\\"')
-			// let projectList = JSON.parse(JSON.parse(tmp))
-			// // let qrMenus = getQrMenus(JSON.parse(res.qrMenus),ServiceMenus)
-			// let qrMenus = JSON.parse(res.qrMenus)
-			// qrMenus = getQrMenus(qrMenus,ServiceMenus)
-			
-			// res.projectList = projectList
-			// res.qrMenus = qrMenus
-			// if (!res.avatarUrl){
-			// 	res.avatarUrl = res.headPath
-			// }
 			return accessToken
 
 		})
@@ -267,8 +256,39 @@ var install = (Vue, vm) => {
 		
 		//返回用户配置信息
 	
-		return await vm.$u.get(apiUrl.userInfo)
+		let userInfo = await vm.$u.get(apiUrl.userInfo)
+	
+		//返回用户项目信息
+		let projectList = await getProjectList()
 		
+		userInfo.projectList = projectList
+		
+		userInfo.project = projectList[0]
+		
+		userInfo.project.org = projectList[0].organizationList[0]
+		
+		let qrMenus = getQrMenus(userInfo.project.menu.qrPage,ServiceMenus)
+		
+		userInfo.qrMenus = qrMenus
+		
+		// let qrMenus = JSON.parse(res.qrMenus)
+		// qrMenus = getQrMenus(qrMenus,ServiceMenus)
+		
+		//用户项目列表
+		//project 设为 string
+		// let tmp = JSON.stringify(res.project).replace(/\\\"projectID\\\":(\d+)/g, '\\"projectID\\":\\"$1\\"')
+		// let projectList = JSON.parse(JSON.parse(tmp))
+		// // let qrMenus = getQrMenus(JSON.parse(res.qrMenus),ServiceMenus)
+		// let qrMenus = JSON.parse(res.qrMenus)
+		// qrMenus = getQrMenus(qrMenus,ServiceMenus)
+		
+		// res.projectList = projectList
+		// res.qrMenus = qrMenus
+		// if (!res.avatarUrl){
+		// 	res.avatarUrl = res.headPath
+		// }
+		
+		return userInfo;
 		
 	}
 	

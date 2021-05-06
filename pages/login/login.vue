@@ -95,50 +95,9 @@
 
 					let userInfo = await this.$u.api.getUserInfo()
 
-					let projectList = await this.$u.api.getProjectList()
-
-					userInfo.project = projectList[0]
-
-					userInfo.project.org = projectList[0].organizationList[0]
-					
-
 					await this.$u.vuex('g_userProfile', userInfo)
 
 					console.debug(this.g_userProfile)
-
-
-					//获取登陆账号项目信息
-					// userProfile.project= await this.$u.api.project({
-					// 	accountId:userProfile.accountId,
-					// 	projectId:userProfile.projectList[0].projectID,
-					// 	projectName:userProfile.projectList[0].projectName
-					// })
-
-					// console.debug(userProfile)
-
-					// await this.$u.vuex('g_userProfile',userInfo.data)
-
-
-
-					// let project = await this.$u.api.getEmployeeProject({
-					// 	empId:this.g_userProfile.employeeList[0].empId,
-					// })
-					// console.log(project)
-
-					// let orgList = await this.$u.api.getOrgList({
-					// 	orgId: this.g_userProfile.employeeList[0].orgId,
-					// })
-
-					// console.log(orgList)
-
-					// let passQrcode = await this.$u.api.getPassQrcode()
-
-					// console.log(passQrcode)
-
-
-
-
-					// 	console.debug(userProfile)
 
 					// //跳转至主页
 					this.$u.route({
